@@ -1,0 +1,13 @@
+
+importFrom(graphics, lines, par, plot, title)
+
+
+importFrom(stats, cor, density, dnorm, pf, predict, qnorm, qqline,
+ qqnorm, qqplot, rgamma, smooth.spline, var)
+import(sva)
+import(limma)
+import(matrixStats)
+importFrom(corpcor, fast.svd)
+export(ttScreening)
+export(sva2)
+export(irwsva.build2)
