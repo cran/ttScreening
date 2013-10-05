@@ -27,7 +27,7 @@ rowname = NULL)
    Categorical variable with dimension m by 1 or NULL. This is to fit the situation of evaluating conditional methQTL with x2 being SNPs or interaction between x1 and x2.
 }
   \item{type}{
-    Type of variable x1, "numeric" or "categorical".
+    Type of variable x1, "numeric" or "factor".
 }
   \item{interaction}{
      logic values ("TRUE" or "FALSE").

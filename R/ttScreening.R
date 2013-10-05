@@ -37,7 +37,7 @@ function (dat, mod, mod0 = NULL, n.sv, B = 5)
     # Patch code 
     if(any(dats!=0)) {sv = fast.svd(dats, tol = 0)$v[, 1:n.sv]
     } else {sv=svd(dats)$v[, 1:n.sv]
-		print("error in fast.svd used svd instead")}
+		print("error in fast.svd(); svd() applied instead")}
 
     retval <- list(sv = sv, pprob.gam = pprob.gam, pprob.b = pprob.b,  
         n.sv = n.sv,message) 
@@ -133,12 +133,12 @@ ttScreening<- function(y=y,x1=x1,x2=x2,type=c("numeric","factor"),interaction=c(
 		}
 
 	if(is.null(x2) == TRUE && type == "factor"){
-	if(length(levels(x1)) > 3){stop("incorrect number of categorical levels")
+	if(length(levels(x1)) > 3){stop("the level of x1 can not be more than 3")
 	geterrmessage()}}
 
 
 	if(is.null(x2) == FALSE && type == "factor"){
-	if( length(levels(x2)) > 3 & length(levels(x1)) > 2){stop("incorrect number of categorical levels")
+	if( length(levels(x2)) > 3 & length(levels(x1)) > 2){stop("x1 and x2 are both categorical variables. x1 has to be binary and x2 cannot have more than 3 levels to avoid singular design matrix")
 	geterrmessage()}}
 	
 	if(as.numeric(max(data)<1 && min(data)>0) == 1){edata <- log2(data/(1-data))}else{
@@ -411,7 +411,7 @@ if(method == "TT"){
 
 	if(method == "FDR" | method == "Bonferroni"){
 		if(linear == "robust"){
-		one<-tryCatch(lmFit(edata, design=modSv, method="robust"), warning=function(w)finally=print("Robust did not converge, LS regression used"))
+		one<-tryCatch(lmFit(edata, design=modSv, method="robust"), warning=function(w)finally=print("robust regression did not converge; LS regression applied instead"))
 		}else{one<-0}
 		if(linear=="robust" & is.character(one) == TRUE){linear = "ls"}
 		lmfit<-eBayes(lmFit(edata, design=modSv, method=linear))$p.value
@@ -443,7 +443,7 @@ if(method == "TT"){
 if(method == "TT"){
 	if(length(final.temp) > 1){
 		if(linear == "robust"){
-		one<-tryCatch(lmFit(edata[final.temp,], design=modSv, method="robust"), warning=function(w)finally=print("Robust did not converge, LS regression used"))
+		one<-tryCatch(lmFit(edata[final.temp,], design=modSv, method="robust"), warning=function(w)finally=print("robust regression did not converge; LS regression applied instead"))
 		}else{one<-0}
 		if(linear=="robust" & is.character(one)==TRUE){linear = "ls"}
 
