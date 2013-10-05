@@ -86,7 +86,7 @@ ttScreening<- function(y=y,x1=x1,x2=x2,type=c("numeric","factor"),interaction=c(
 	rownames(y) <- seq(1:nrow(y))
 	} else {rownames(y) <- rownames(y)}	
 
-	x2<-as.factor(x2)
+	if(is.null(x2) == FALSE){x2<-as.factor(x2)}else{interaction = 'FALSE'}
 	if(type == "factor"){x1<-as.factor(x1)}
 
 	if (is.null(x2) == TRUE){
@@ -291,59 +291,8 @@ if(method == "TT"){
 		mod0 <- model.matrix(~x1 + as.factor(x2), data=data.frame(x1,x2))[,1:(length(unique(x2))+1)]}
 
 	if(interaction == TRUE && type == "factor"){
-			levels.x1<-levels(as.factor(x1))
-			levels.x2<-levels(as.factor(x2))
-			if(length(levels.x1) > 2 & length(levels.x2) > 2){
-			x3<-x4<-x5<-x6<-rep(0,length(x1))
-			x3[x1 == levels.x1[2] & x2 == levels.x2[2]]<-1
-			x4[x1 == levels.x1[2] & x2 == levels.x2[3]]<-1
-			x5[x1 == levels.x1[3] & x2 == levels.x2[2]]<-1
-			x6[x1 == levels.x1[3] & x2 == levels.x2[3]]<-1
-			data.temp<-data.frame(x1,x2,x3,x4,x5,x6)
-			colnames(data.temp)<-c("x1","x2",paste("x1.",levels.x1[2],".x2.",levels.x2[2],sep=""),paste("x1.",levels.x1[2],".x2.",levels.x2[3],sep=""),
-			paste("x1.",levels.x1[3],".x2.",levels.x2[2],sep=""),paste("x1.",levels.x1[3],".x2.",levels.x2[3],sep=""))
- 			com1<-which(sapply(1:ncol(data.temp), function(i) all(x3==data.temp[,i])))
- 			com2<-which(sapply(1:ncol(data.temp), function(i) all(x4==data.temp[,i])))
- 			com3<-which(sapply(1:ncol(data.temp), function(i) all(x5==data.temp[,i])))
-			dups<-(com1)*as.numeric(length(com1) > 1)+(com2)*as.numeric(length(com2)>1) + (com3)*as.numeric(length(com3)>1)
-
-		if(all(dups == c(3,4))== TRUE ){
-		mod <- model.matrix(~as.factor(data.temp[,1]) + as.factor(data.temp[,2]) + (data.temp[,5]) +(data.temp[,6]))[,1:(length(unique(x1))*length(unique(x2))-2)]
-		colnames(mod)<-c("Intercept",paste("x1.",levels.x1[2],sep=""),paste("x1.",levels.x1[3],sep=""),paste("x2.",levels.x2[2],sep=""),paste("x2.",levels.x2[3],sep=""),
-			paste("x1.",levels.x1[3],".x2.",levels.x2[2],sep=""),paste("x1.",levels.x1[3],".x2.",levels.x2[3],sep=""))}
-
-		if(all(dups == c(3,5))==TRUE ){
-		mod <- model.matrix(~as.factor(data.temp[,1]) + as.factor(data.temp[,2])+ (data.temp[,4]) + (data.temp[,6]))[,1:(length(unique(x1))*length(unique(x2))-2)]
-		colnames(mod)<-c("Intercept",paste("x1.",levels.x1[2],sep=""),paste("x1.",levels.x1[3],sep=""),paste("x2.",levels.x2[2],sep=""),paste("x2.",levels.x2[3],sep=""),
-		paste("x1.",levels.x1[2],".x2.",levels.x2[3],sep=""),paste("x1.",levels.x1[3],".x2.",levels.x2[3],sep=""))}
-
-		if(all(dups == c(3,6))==TRUE ){
-		mod <- model.matrix(~as.factor(data.temp[,1]) + as.factor(data.temp[,2])+ as.factor(data.temp[,4]) + as.factor(data.temp[,5]))[,1:(length(unique(x1))*length(unique(x2))-2)]
-		colnames(mod)<-c("Intercept",paste("x1.",levels.x1[2],sep=""),paste("x1.",levels.x1[3],sep=""),paste("x2.",levels.x2[2],sep=""),paste("x2.",levels.x2[3],sep=""),
-		paste("x1.",levels.x1[2],".x2.",levels.x2[3],sep=""),paste("x1.",levels.x1[3],".x2.",levels.x2[2],sep=""))}
-		
-		if(all(dups == c(4,5))==TRUE ){
-		mod <- model.matrix(~as.factor(data.temp[,1]) + as.factor(data.temp[,2])+ (data.temp[,3]) +(data.temp[,6]))[,1:(length(unique(x1))*length(unique(x2))-2)]
-		colnames(mod)<-c("Intercept",paste("x1.",levels.x1[2],sep=""),paste("x1.",levels.x1[3],sep=""),paste("x2.",levels.x2[2],sep=""),paste("x2.",levels.x2[3],sep=""),
-		paste("x1.",levels.x1[2],".x2.",levels.x2[2],sep=""),paste("x1.",levels.x1[3],".x2.",levels.x2[3],sep=""))}
-
-		if(all(dups == c(4,6))==TRUE ){
-		mod <- model.matrix(~as.factor(data.temp[,1]) + as.factor(data.temp[,2])+ (data.temp[,3]) + (data.temp[,5]))[,1:(length(unique(x1))*length(unique(x2))-2)]
-		colnames(mod)<-c("Intercept",paste("x1.",levels.x1[2],sep=""),paste("x1.",levels.x1[3],sep=""),paste("x2.",levels.x2[2],sep=""),paste("x2.",levels.x2[3],sep=""),
-		paste("x1.",levels.x1[2],".x2.",levels.x2[2],sep=""),paste("x1.",levels.x1[3],".x2.",levels.x2[2],sep=""))}
-
-		if(all(dups == c(5,6))==TRUE ){
-		mod <- model.matrix(~as.factor(data.temp[,1]) + as.factor(data.temp[,2])+ (data.temp[,3]) + (data.temp[,4]))[,1:(length(unique(x1))*length(unique(x2))-2)]
-		colnames(mod)<-c("Intercept",paste("x1.",levels.x1[2],sep=""),paste("x1.",levels.x1[3],sep=""),paste("x2.",levels.x2[2],sep=""),paste("x2.",levels.x2[3],sep=""),
-		paste("x1.",levels.x1[2],".x2.",levels.x2[2],sep=""),paste("x1.",levels.x1[2],".x2.",levels.x2[3],sep=""))}
-
-		mod0 <- model.matrix(~as.factor(x1) + as.factor(x2), data=data.frame(x1,x2))[,1:(length(unique(x1))+length(unique(x2))-1)]
-		colnames(mod0)<-c("Intercept",paste("x1.",levels.x1[2],sep=""),paste("x1.",levels.x1[3],sep=""),paste("x2.",levels.x2[2],sep=""),paste("x2.",levels.x2[3],sep=""))
-		}else{
 		mod <- model.matrix(~as.factor(x1) + as.factor(x2)+ as.factor(x1):as.factor(x2), data=data.frame(x1,x2))[,1:(length(unique(x1))*length(unique(x2)))]
-		mod0 <- model.matrix(~as.factor(x1) + as.factor(x2), data=data.frame(x1,x2))[,1:(length(unique(x1))+length(unique(x2))-1)]
-		}
-		}
+		mod0 <- model.matrix(~as.factor(x1) + as.factor(x2), data=data.frame(x1,x2))[,1:(length(unique(x1))+length(unique(x2))-1)]}
 		
 		svobj = sva2(as.matrix(edata),mod,mod0,n.sv=n.sv)
 		n.sv.temp<-svobj$n.sv
@@ -417,24 +366,19 @@ if(method == "TT"){
 		lmfit<-eBayes(lmFit(edata, design=modSv, method=linear))$p.value
 
 	if(is.null(x2) == TRUE){
-		lmfit.min<-lmfit[,2]
+		if(type == "numeric" || length(levels(x1))==2){lmfit.min<-lmfit[,2]}else{lmfit.min<-apply(lmfit[,2:3],1,min)}
 		lmFitFDR.rob<-which(p.adjust(lmfit.min,method="fdr")<= FDR.alpha)
 		lmFitBon.rob<-which(p.adjust(lmfit.min,method="bonferroni")<= Bon.alpha)
 		}
 
 	if(interaction == FALSE && is.null(x2) == FALSE){
-		if(type == "factor"){ind<-length(unique(x1))+1}else{ind<-3}
-		lmfit.min<-lmfit[,ind]
+		if(length(levels(x2)) == 2){lmfit.min<-lmfit[,3]}else{lmfit.min<-apply(lmfit[,3:4],1,min)}
 		lmFitFDR.rob<-which(p.adjust(lmfit.min,method="fdr")<= FDR.alpha)
 		lmFitBon.rob<-which(p.adjust(lmfit.min,method="bonferroni")<= Bon.alpha)
 		}
 
 	if(interaction == TRUE){
-		if(type=="numeric" & length(unique(x2))==2){lmfit.min<-lmfit[,4]}
-		if(type=="factor" & length(unique(x1))==2 & length(unique(x2)) == 2){lmfit.min<-lmfit[,4]}
-		if(type=="numeric" & length(unique(x2))==3){lmfit.min<-apply(lmfit[,5:6],1,min)}
-		if(type=="factor" & length(unique(x1))==2 & length(unique(x2)) == 3){lmfit.min<-apply(lmfit[,5:6],1,min)}
-		if(type=="factor" && length(unique(x1))==3 & length(unique(x2)) == 3){lmfit.min<-apply(lmfit[,6:9],1,min)}
+		if(length(unique(x2))==2){lmfit.min<-lmfit[,4]}else{lmfit.min<-apply(lmfit[,5:6],1,min)}
 		lmFitFDR.rob<-which(p.adjust(lmfit.min,method="fdr")<= FDR.alpha)
 		lmFitBon.rob<-which(p.adjust(lmfit.min,method="bonferroni")<= Bon.alpha)
 		}
