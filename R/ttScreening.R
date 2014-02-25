@@ -89,10 +89,14 @@ ttScreening<- function(y=y,x1=x1,x2=x2,type=c("numeric","factor"),interaction=c(
 	if(is.null(x2) == FALSE){x2<-as.factor(x2)}else{interaction = 'FALSE'}
 	if(type == "factor"){x1<-as.factor(x1)}
 
+	y[which(y == '')] <- NA
+	x1[which(x1 == '')]<-NA
+	if(is.null(x2) == FALSE){x2[which(x2 == '')]<-NA}
+
 	if (is.null(x2) == TRUE){
 		
-		y.omit <- which(is.na(y), arr.ind=TRUE)[,1]		#gives rows of missing cpg data
-		x1.omit <- which(is.na(x1), arr.ind=TRUE) 		#gives missing covariate data
+		y.omit <- unique(which(is.na(y), arr.ind=TRUE)[,1])		#gives rows of missing cpg data
+		x1.omit <- unique(which(is.na(x1), arr.ind=TRUE) )		#gives missing covariate data
 		if (length(y.omit)<1  && length(x1.omit) < 1){
 		data=y
 		x1=x1 }
@@ -108,23 +112,23 @@ ttScreening<- function(y=y,x1=x1,x2=x2,type=c("numeric","factor"),interaction=c(
 		
 	}else{
 
-		y.omit <- which( is.na(y), arr.ind=TRUE)[,1] 		#gives rows of missing cpg data
-		x1.omit <- which( is.na(x1), arr.ind=TRUE)		#gives missing covariate data
-		x2.omit <- which( is.na(x2), arr.ind=TRUE)		#gives missing snp data
+		y.omit <- unique(which( is.na(y), arr.ind=TRUE)[,1])		#gives rows of missing cpg data
+		x1.omit <- unique(which( is.na(x1), arr.ind=TRUE))		#gives missing covariate data
+		x2.omit <- unique(which( is.na(x2), arr.ind=TRUE))		#gives missing snp data
 		if (length(y.omit) < 1 && length(x1.omit) < 1 && length(x2.omit) < 1){
 		data=y
 		x1 = x1
 		x2 = x2}
-		if(length(y.omit) > 1 && length(x1.omit) < 1 && length(x2.omit) < 1){
+		if(length(y.omit) >= 1 && length(x1.omit) < 1 && length(x2.omit) < 1){
 		data=y[-y.omit,]
 		x1 = x1
 		x2 = x2}
-		if(length(y.omit)<1 && length(x1.omit) > 1 | length(x2.omit) > 1){
+		if(length(y.omit)<1 && (length(x1.omit) >= 1 | length(x2.omit) >= 1)){
 		omit <- as.numeric(na.omit(c(x1.omit,x2.omit)))
 		data <- y[,-omit]
 		x1 <- x1[-omit]
 		x2 <- x2[-omit]}
-		if(length(y.omit)>1 && length(x1.omit) > 1 | length(x2.omit) > 1){
+		if(length(y.omit)>=1 && (length(x1.omit) >= 1 | length(x2.omit) >= 1)){
 		omit <- as.numeric(na.omit(c(x1.omit,x2.omit)))
 		data <- y[-y.omit,-omit]
 		x1 <- x1[-omit]
@@ -204,7 +208,8 @@ if(method == "TT"){
 		train.length<-c(train.length,length(train.temp))	#number of sites selected at training level
 		if(length(train.temp) < 1){
 			test.temp<-NULL}
-			test.temp<-train.temp[(f.pvalue(matrix(edata[train.temp,test],nrow=length(train.temp),ncol=length(test)),modSv[test,],mod0Sv[test,]) <= test.alpha)]
+			if(length(train.temp) == 1){test.temp<-train.temp[(f.pvalue(matrix(edata[train.temp,test],byrow=T,ncol=1),modSv[test,],mod0Sv[test,]) <= test.alpha)]
+			}else{test.temp<-train.temp[(f.pvalue(matrix(edata[train.temp,test],nrow=length(train.temp),ncol=length(test)),modSv[test,],mod0Sv[test,]) <= test.alpha)]}
 		test.length<-c(test.length,length(test.temp))		#number of sites selected at testing level
 		if(length(test.temp) < 1){selection[,i]<- 0}
 		if(length(test.temp) == 1){selection[test.temp,i]<- 1
@@ -272,7 +277,8 @@ if(method == "TT"){
 		train.length<-c(train.length,length(train.temp))	#number of sites selected at training level
 		if(length(train.temp) < 1){
 			test.temp<-NULL}
-			test.temp<-train.temp[(f.pvalue(matrix(edata[train.temp,test],nrow=length(train.temp),ncol=length(test)),modSv[test,],mod0Sv[test,]) <= test.alpha)]
+			if(length(train.temp) == 1){test.temp<-train.temp[(f.pvalue(matrix(edata[train.temp,test],byrow=T,ncol=1),modSv[test,],mod0Sv[test,]) <= test.alpha)]
+			}else{test.temp<-train.temp[(f.pvalue(matrix(edata[train.temp,test],nrow=length(train.temp),ncol=length(test)),modSv[test,],mod0Sv[test,]) <= test.alpha)]}
 		test.length<-c(test.length,length(test.temp))		#number of sites selected a testing level
 		if(length(test.temp) < 1){selection[,i]<- 0}
 		if(length(test.temp) ==1){selection[test.temp,i]<- 1
@@ -340,7 +346,8 @@ if(method == "TT"){
 		train.length<-c(train.length,length(train.temp))	#number of sites selected at the training level
 		if(length(train.temp) < 1){
 			test.temp<-NULL}
-			test.temp<-train.temp[(f.pvalue(matrix(edata[train.temp,test],nrow=length(train.temp),ncol=length(test)),modSv[test,],mod0Sv[test,]) <= test.alpha)]
+			if(length(train.temp) == 1){test.temp<-train.temp[(f.pvalue(matrix(edata[train.temp,test],byrow=T,ncol=1),modSv[test,],mod0Sv[test,]) <= test.alpha)]
+			}else{test.temp<-train.temp[(f.pvalue(matrix(edata[train.temp,test],nrow=length(train.temp),ncol=length(test)),modSv[test,],mod0Sv[test,]) <= test.alpha)]}
 		test.length<-c(test.length,length(test.temp))		#number of sites selected at the testing level
 		if(length(test.temp) < 1){selection[,i]<- 0}
 		if(length(test.temp) ==1){selection[test.temp,i]<- 1
@@ -394,7 +401,7 @@ if(method == "TT"){
 		tt<-eBayes(lmFit(edata[final.temp,],design=modSv,method=linear))
 		TT.output<-data.frame(rownames(edata)[final.temp],freq.temp,tt$coefficients,tt$p.value)}
 	if(length(final.temp) == 1){
-		tt<- summary(glm(t(as.matrix(edata[final.temp,]))~ modSv[,-1],family=gaussian))
+		tt<- summary(glm(matrix(edata[final.temp,],ncol=1)~ modSv[,-1],family=gaussian))
 		TT.output<-data.frame(rownames(edata)[final.temp],freq.temp,t(tt$coefficients[,1]),t(tt$coefficients[,4]))}
 	if(length(final.temp) < 1){
 		TT.output<- t(rep("NA",(ncol(modSv)*2 + 2)))}
@@ -410,7 +417,7 @@ if(method == "TT"){
 		ff<-eBayes(lmFit(edata[lmFitFDR.rob,],design=modSv,method=linear))
 		FDR.output<-data.frame(rownames(edata)[lmFitFDR.rob], ff$coefficients, ff$p.value)}
 	if(length(lmFitFDR.rob) == 1){
-		ff<- summary(glm(t(as.matrix(edata[lmFitFDR.rob,]))~modSv[,-1],family=gaussian))
+		ff<- summary(glm(matrix(edata[lmFitFDR.rob,],ncol=1)~modSv[,-1],family=gaussian))
 		FDR.output<-data.frame(rownames(edata)[lmFitFDR.rob], t(ff$coefficients[,1]), t(ff$coefficients[,4]))}
 	if(length(lmFitFDR.rob) < 1){
 		FDR.output<- t(rep("NA",(ncol(modSv)*2 + 1)))}
@@ -419,7 +426,7 @@ if(method == "TT"){
 		bb<-eBayes(lmFit(edata[lmFitBon.rob,],design=modSv,method=linear))
 		Bon.output<-data.frame(rownames(edata)[lmFitBon.rob],bb$coefficients, bb$p.value )}
 	if(length(lmFitBon.rob) == 1){
-		bb<- summary(glm(t(as.matrix(edata[lmFitBon.rob,]))~modSv[,-1],family=gaussian))
+		bb<- summary(glm(matrix(edata[lmFitBon.rob,],ncol=1)~modSv[,-1],family=gaussian))
 		Bon.output<-data.frame(rownames(edata)[lmFitBon.rob], t(bb$coefficients[,1]) , t(bb$coefficients[,4]) )}
 	if(length(lmFitBon.rob) < 1){
 		Bon.output <- t(rep("NA",(ncol(modSv)*2 + 1)))}
