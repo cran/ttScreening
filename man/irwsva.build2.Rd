@@ -1,6 +1,5 @@
 \name{irwsva.build2}
 \alias{irwsva.build2}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Adjusted irwsva.build which builds surrogate variables from gene expression data
 }
@@ -57,8 +56,3 @@ Original irwsva.build: Jeffrey T. Leek <jleek@jhsph.edu>, John Storey jstorey@pr
 sva Vignette http://www.biostat.jhsph.edu/~jleek/sva/
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-\code{\link{sva}}
-}

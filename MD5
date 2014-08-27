@@ -1,6 +1,11 @@
-ca60c98f23b4738c368a46bafedd5ab5 *DESCRIPTION
-9b4074356d6f56fc5e7ad5f2650fd6ad *NAMESPACE
-7a129487a11d22df323450200228c730 *R/ttScreening.R
-1360951ff2f6a4634dc6a690820f97ee *man/irwsva.build2.Rd
-29f24db692657d015726024075f09e68 *man/sva2.Rd
-26a36b70932fa275b8300459bd601095 *man/ttScreening.Rd
+cccecf115c12658c7cffba4880ebf17e *DESCRIPTION
+4da63d58c69fac1cf25b8539b99cbe51 *NAMESPACE
+3d6df0bbae11c1165c0e3eaef860ce5f *R/irwsva.build2.R
+e8cfe52e961ab9b9997f758ad379a36f *R/num.sv2.R
+b84102659880812146b13446a197a076 *R/sva2.R
+f8d7659d70b35da44168468203c6b8bf *R/ttScreening.R
+c7b96f0de8c55c11bff5d1881377781b *man/irwsva.build2.Rd
+0147cf2a5984022edc64aea2ab6af810 *man/num.sv2.Rd
+e9534800799ada30c4f1896848ac1363 *man/sva2.Rd
+4d00c84a0bfd9877fa61eeb43b2863d4 *man/ttScreening-package.Rd
+2686cbd7e12d8fffea502a050b7f68c7 *man/ttScreening.Rd

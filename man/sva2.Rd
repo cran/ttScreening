@@ -1,6 +1,5 @@
 \name{sva2}
 \alias{sva2}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 The adjusted sva code using irwsva.build2
 }
@@ -11,7 +10,7 @@ This function is the modified SVA function in which it uses the irwsva.build2 fu
 sva2(dat, mod, mod0 = NULL, n.sv = NULL, method = c("irw", "two-step"), 
 	vfilter = NULL, B = 5, numSVmethod = "be")
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{dat}{
 A m CpG sites by n subjects matrix of methylation data.
@@ -67,10 +66,4 @@ Original sva: Jeffrey T. Leek <jleek@jhsph.edu>, John Storey jstorey@princeton.e
 }
 \note{
 sva Vignette http://www.biostat.jhsph.edu/~jleek/sva/
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-\code{\link{sva}}
 }
