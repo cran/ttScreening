@@ -9,7 +9,7 @@
 \usage{
 ttScreening(y = y, formula, imp.var, data, iterations = 100, 
 sva.method = c("two-step", "irw"), cv.cutoff = 50, n.sv = NULL, 
-train.alpha = 0.05, test.alpha = 0.1, FDR.alpha = 0.05, Bon.alpha = 0.05,
+train.alpha = 0.05, test.alpha = 0.05, FDR.alpha = 0.05, Bon.alpha = 0.05,
 percent = (2/3),linear = c("robust", "ls"), vfilter = NULL, B = 5,
  numSVmethod = "be", rowname = NULL)
 }
@@ -43,7 +43,7 @@ percent = (2/3),linear = c("robust", "ls"), vfilter = NULL, B = 5,
      Significance level for training samples. The default is 0.05.
 }
   \item{test.alpha}{
-  Significance level for testing samples. The default is 0.1.
+  Significance level for testing samples. The default is 0.05.
 }
   \item{FDR.alpha}{
     False discovery rate. The default is 0.05. This is to fit the need of selecting variables based on FDR.
@@ -168,7 +168,7 @@ n<-nrow(y)
 
 runs<-ttScreening(y=y,formula=~x1+x2+x1:x2,
 			data=data.frame(x1,x2), imp.var=3,sva.method="two-step", iterations=100,
-			cv.cutoff=50, n.sv=NULL, train.alpha=0.05,test.alpha=0.1, 
+			cv.cutoff=50, n.sv=NULL, train.alpha=0.05,test.alpha=0.05, 
 			FDR.alpha=0.05,Bon.alpha=0.05,percent=(2/3),linear= "ls",
 			vfilter = NULL,B = 5, numSVmethod = "be",	rowname=NULL)
 

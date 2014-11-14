@@ -1,5 +1,5 @@
 ttScreening<- function(y=y,formula,imp.var,data,iterations=100,sva.method=c("two-step","irw"),
-					cv.cutoff=50,n.sv=NULL,train.alpha=0.05,test.alpha=0.1, 
+					cv.cutoff=50,n.sv=NULL,train.alpha=0.05,test.alpha=0.05, 
 					FDR.alpha=0.05,Bon.alpha=0.05,percent=(2/3),
 					linear= c("robust","ls"),vfilter = NULL, B = 5, numSVmethod = "be",rowname=NULL){
 
@@ -72,7 +72,7 @@ ttScreening<- function(y=y,formula,imp.var,data,iterations=100,sva.method=c("two
 	}
 
 	#TT#
-	if(linear=='robust'){print("warning: robust regression my slow down screening process")}
+	if(linear=='robust'){print("warning: robust regression may slow down screening process")}
 	x <- 1:ncol(edata)
 	length <- round(percent * ncol(edata))
 	for (i in 1:iterations){

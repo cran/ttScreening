@@ -1,11 +1,11 @@
-cccecf115c12658c7cffba4880ebf17e *DESCRIPTION
+1208798f52976fc44b9c7dab01cbc05c *DESCRIPTION
 4da63d58c69fac1cf25b8539b99cbe51 *NAMESPACE
 3d6df0bbae11c1165c0e3eaef860ce5f *R/irwsva.build2.R
 e8cfe52e961ab9b9997f758ad379a36f *R/num.sv2.R
 b84102659880812146b13446a197a076 *R/sva2.R
-f8d7659d70b35da44168468203c6b8bf *R/ttScreening.R
+df5f185c5c6ef6c6f4f1fe647d417fc6 *R/ttScreening.R
 c7b96f0de8c55c11bff5d1881377781b *man/irwsva.build2.Rd
 0147cf2a5984022edc64aea2ab6af810 *man/num.sv2.Rd
 e9534800799ada30c4f1896848ac1363 *man/sva2.Rd
-4d00c84a0bfd9877fa61eeb43b2863d4 *man/ttScreening-package.Rd
-2686cbd7e12d8fffea502a050b7f68c7 *man/ttScreening.Rd
+632f8646b299a4ef742c9119ad57f290 *man/ttScreening-package.Rd
+bdfcee8b4caa97e1ce3a2772ec18634c *man/ttScreening.Rd

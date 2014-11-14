@@ -11,8 +11,8 @@ Genome-wide DNA methylation sites screening by use of training and testing sampl
 \tabular{ll}{
 Package: \tab ttScreening\cr
 Type: \tab Package\cr
-Version: \tab 1.4\cr
-Date: \tab 2014-08-27\cr
+Version: \tab 1.5\cr
+Date: \tab 2014-11-14\cr
 License: \tab Artistic-2.0\cr
 }
 This package utilizes training and testing samples to filter out uninformative DNA methylation
