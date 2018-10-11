@@ -2,7 +2,7 @@
 \alias{ttScreening-package}
 \docType{package}
 \title{
-Genome-wide DNA methylation sites screening by use of training and testing samples.
+Genome-Wide DNA Methylation Sites Screening by Use of Training and Testing Samples
 }
 \description{
  A screening process to filter out non-informative DNA methylation sites by applying (ordinary or robust) linear regressions to training data, and the results are further examined using testing samples. Surrogate variables are included to account for unknown factors.
@@ -11,8 +11,8 @@ Genome-wide DNA methylation sites screening by use of training and testing sampl
 \tabular{ll}{
 Package: \tab ttScreening\cr
 Type: \tab Package\cr
-Version: \tab 1.5\cr
-Date: \tab 2014-11-14\cr
+Version: \tab 1.6\cr
+Date: \tab 2018-09-18\cr
 License: \tab Artistic-2.0\cr
 }
 This package utilizes training and testing samples to filter out uninformative DNA methylation
@@ -22,12 +22,12 @@ to explain unknown factor effects.
 \author{
 Meredith Ray, Xin Tong, Hongmei Zhang
 
-Maintainer: Meredith Ray <mere2110@yahoo.com>
+Maintainer: Meredith Ray <maray@memphis.edu>
 }
 \references{
-Meredith Ray, Xin Tong, Hongmei Zhang, and Wilfred Karmaus. (2014) "DNA methylation sites screening with surrogate variables", unpublished manuscript.
+Ray MA, Tong X, Lockett GA, Zhang H, and Karmaus WJJ. (2016) ``An Efficient Approach to Screening Epigenome-Wide Data'', BioMed Research International.
 
-Leek JT and Storey JD. (2007) "Capturing heterogeneity in gene expression studies by `Surrogate Variable Analysis'." PLoS Genetics, 3: e161.
+Leek JT and Storey JD. (2007) ``Capturing heterogeneity in gene expression studies by `Surrogate Variable Analysis'.'' PLoS Genetics, 3: e161.
 }
 
 

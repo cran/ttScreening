@@ -13,7 +13,7 @@ sva2(dat, mod, mod0 = NULL, n.sv = NULL, method = c("irw", "two-step"),
 
 \arguments{
   \item{dat}{
-A m CpG sites by n subjects matrix of methylation data.
+An m by n (m cpg sites by n subjects) matrix of methylation data.
 }
   \item{mod}{
 A n by k model matrix corresponding to the primary model fit (see model.matrix).

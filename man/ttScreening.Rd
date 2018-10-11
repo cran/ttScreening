@@ -7,16 +7,16 @@
  A screening process to filter out non-informative DNA methylation sites by applying (ordinary or robust) linear regressions to training data, and the results are further examined using testing samples. Surrogate variables are included to account for unknown factors.
 }
 \usage{
-ttScreening(y = y, formula, imp.var, data, iterations = 100, 
+ttScreening(y = y, formula, imp.var, data, B.values=FALSE,iterations = 100, 
 sva.method = c("two-step", "irw"), cv.cutoff = 50, n.sv = NULL, 
-train.alpha = 0.05, test.alpha = 0.05, FDR.alpha = 0.05, Bon.alpha = 0.05,
+train.alpha = 0.05, test.alpha = 0.1, FDR.alpha = 0.05, Bon.alpha = 0.05,
 percent = (2/3),linear = c("robust", "ls"), vfilter = NULL, B = 5,
- numSVmethod = "be", rowname = NULL)
+ numSVmethod = "be", rowname = NULL, maxit=20)
 }
 
 \arguments{
   \item{y}{
-    Data matrix of logit transformed DNA methylation measures (m by n, m subjects and n CpG sites). Each row represents DNA methylation measures of all CpG sites for one subject.
+    Data matrix of DNA methylation measures (m by n, m CpG sites and n subjects). Each column represents DNA methylation measures of all CpG sites for one subject.
 }
   \item{formula}{
      An object of class \code{\link{formula}} (or one that can be coerced to that class): a symbolic description of the model to be fitted. The details of model specification are given under "Details".
@@ -25,7 +25,10 @@ percent = (2/3),linear = c("robust", "ls"), vfilter = NULL, B = 5,
     A vector indicating the location of the term(s) in the formula option on which the selection of CpG sites are made. Interactions are considered a single term. For example, suppose the right-hand side of the equation is: x + z + x:z. If the decision of selecting a CpG site is based on one single term, e.g., the significance of interaction effect, then imp.var is set as the location of that term, e.g., imp.var=3 (the third term). If the decision is desired to base on all the three terms, then imp.var=c(1,2,3).
 }
   \item{data}{
-	Data frame created from model.frame.
+	Data frame created from model.frame. Also is the data frame containing the variables defined in formula.
+}
+  \item{B.values}{
+	Logical, TRUE if indicating the methylation is measured as beta values, FALSE if methylation is measured as M-values. The default is FALSE.
 }
   \item{iterations}{
    Number of loops for the training/testing (TT) procedure. The default is 100.
@@ -68,13 +71,20 @@ percent = (2/3),linear = c("robust", "ls"), vfilter = NULL, B = 5,
    The method for determining the number of surrogate variables to use. The default is \code{"be"}, the other method is \code{"leek"}.
 }
   \item{rowname}{
- Optional, NULL or \code{"TRUE"}. The default is NULL. If rownames are not already present with the data, the order in which the DNA methylation sites are listed will become the rowname. Surrogate variable estimates are formed based on the algorithms in Leek and Storey (2007).
+ Optional, NULL or \code{"TRUE"}. The default is NULL. If rownames are not already present within the data, the order in which the DNA methylation sites are listed will become the rowname. Surrogate variable estimates are formed based on the algorithms in Leek and Storey (2007).
 }
+ \item{maxit}{
+ Optional, controls the number of iterations for linear regression estimation methods. The default is 20.
+}
+
 }
 \details{
 See \cite{\link{lm}} or \cite{\link{glm}} for details.
 }
 \value{
+ \item{sub.remove}{
+Denotes which subjects (based on order) were removed due to incomplete or missing data within the prediction variables defined in the formula arguement.
+}
  \item{train.cpg}{
 Number of DNA methylation sites selected after the training step of each loop.
 }
@@ -96,14 +106,17 @@ Final list of the DNA methylation sites by their original rownames selected from
   \item{Bon.cpg}{
 Final list of the DNA methylation sites by their original rownames selected from the Bonferroni method.
 }
+  \item{SV.output}{
+Data frame containing the estimated surrogate variables.
+}
   \item{TT.output}{
-Dataframe containing the list of DNA methylation sites selected from the TT method and the respective coefficients and pvalues for the variables and SVs.
+Data frame containing the list of DNA methylation sites selected from the TT method and the respective coefficients and pvalues for the variables and SVs.
 }
   \item{FDR.output}{
-Dataframe containing the list of DNA methylation sites selected from the FDR method and the respective coefficients and pvalues for the variables and SVs.
+Data frame containing the list of DNA methylation sites selected from the FDR method and the respective coefficients and pvalues for the variables and SVs.
 }
   \item{Bon.output}{
-Dataframe containing the list of DNA methylation sites selected from the Bonferroni method and the respective coefficients and pvalues for the variables and SVs.
+Data frame containing the list of DNA methylation sites selected from the Bonferroni method and the respective coefficients and pvalues for the variables and SVs.
 }
 }
 
@@ -157,20 +170,18 @@ X<-as.matrix(cbind(rep(1,length(x1)),x1,x2,x1*x2,sur1,sur2,sur3,sur4,sur5))
 X.no2<-as.matrix(cbind(rep(1,length(x1)),x1,x1*x2,sur1,sur2,sur3,sur4,sur5))
 X.sur<-as.matrix(cbind(sur1,sur2,sur3,sur4,sur5))
 #mu matrix#
-imp1.mu<-matrix(rep(X%*%t(beta),9),nrow=nsub,ncol=(imp*0.9))
-imp2.mu<-matrix(rep(X.no2%*%t(beta.no2),1),nrow=nsub,ncol=(imp*0.1))
-noimp.mu<-matrix(rep(X.sur%*%t(beta.sur),num-imp),nrow=nsub,ncol=num-imp)
+imp1.mu<-matrix(rep(X\%*\%t(beta),9),nrow=nsub,ncol=(imp*0.9))
+imp2.mu<-matrix(rep(X.no2\%*\%t(beta.no2),1),nrow=nsub,ncol=(imp*0.1))
+noimp.mu<-matrix(rep(X.sur\%*\%t(beta.sur),num-imp),nrow=nsub,ncol=num-imp)
 mu.matrix=cbind(imp1.mu, imp2.mu, noimp.mu)
 error<-rmvnorm(nsub,mean=rep(0,num),sigma=sigma1,method = "chol")
 y<-t(mu.matrix+error)
 
-n<-nrow(y)
 
-runs<-ttScreening(y=y,formula=~x1+x2+x1:x2,
-			data=data.frame(x1,x2), imp.var=3,sva.method="two-step", iterations=100,
-			cv.cutoff=50, n.sv=NULL, train.alpha=0.05,test.alpha=0.05, 
-			FDR.alpha=0.05,Bon.alpha=0.05,percent=(2/3),linear= "ls",
-			vfilter = NULL,B = 5, numSVmethod = "be",	rowname=NULL)
+runs<-ttScreening(y=y,formula=~x1+x2+x1:x2,imp.var=3,data=data.frame(x1,x2),sva.method="two-step",
+			B.values=FALSE,iterations=100,cv.cutoff=50,n.sv=NULL,train.alpha=0.05,
+			test.alpha=0.05,FDR.alpha=0.05,Bon.alpha=0.05,percent=(2/3),linear= "ls",
+			vfilter = NULL, B = 5, numSVmethod = "be",rowname=NULL,maxit=20)
 
 runs$TT.output
 runs$FDR.output
