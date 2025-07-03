@@ -1,18 +1,24 @@
 Package: ttScreening
-Type: Package
 Title: Genome-Wide DNA Methylation Sites Screening by Use of Training
         and Testing Samples
-Version: 1.6
-Date: 2018-09-18
-Author: Meredith Ray, Xin Tong, Hongmei Zhang
-Maintainer: Meredith Ray <maray@memphis.edu>
-Description: A screening process utilizing training and testing samples to filter out uninformative DNA methylation sites. Surrogate variables (SVs) of DNA methylation are included in the filtering process to explain unknown factor effects. 
+Version: 1.7
+Authors@R: 
+    c(person(given="Meredith", family="Ray", email="maray@memphis.edu", role = c("aut", "cre")),
+    person(given="Xin", family="Tong", role = c("aut")),
+    person(given="Hongmei", family="Zhang", role = c("aut")))
+Description: A screening process utilizing training and testing samples to filter out uninformative DNA methylation sites. Surrogate variables (SVs) of DNA methylation are included in the filtering process to explain unknown factor effects.
 License: Artistic-2.0
+Encoding: UTF-8
+RoxygenNote: 7.3.2
 Depends: matrixStats,sva,limma
 Imports: graphics,stats,corpcor,simsalapar,MASS
 biocViews:
 Suggests: mvtnorm
 NeedsCompilation: no
-Packaged: 2018-09-18 20:29:45 UTC; maray
+Packaged: 2025-07-03 19:55:51 UTC; maray
+Author: Meredith Ray [aut, cre],
+  Xin Tong [aut],
+  Hongmei Zhang [aut]
+Maintainer: Meredith Ray <maray@memphis.edu>
 Repository: CRAN
-Date/Publication: 2018-10-11 22:00:02 UTC
+Date/Publication: 2025-07-03 22:40:02 UTC

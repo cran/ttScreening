@@ -4,7 +4,7 @@
 The adjusted sva code using irwsva.build2
 }
 \description{
-This function is the modified SVA function in which it uses the irwsva.build2 function rather than the irwsva.build function to build the surrogate variables. Thus, only a single line has been altered from the original SVA() function.
+This function is the modified SVA function in which it uses the irwsva.build2 function rather than the irwsva.build function to build the surrogate variables. Thus, only a single line has been altered from the original surrogate variable anaysis function.
 }
 \usage{
 sva2(dat, mod, mod0 = NULL, n.sv = NULL, method = c("irw", "two-step"), 

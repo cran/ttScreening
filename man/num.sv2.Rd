@@ -5,7 +5,7 @@
 Adjusted num.sv which estimates the number of important surrogate variables from a gene expression data set.
 }
 \description{
-This function is directly modified from the orginal num.sv() in the \pkg{sva} package. This function has the tolerance level in the fast.svd() function set back to its orginal default instead of 0.
+This function is directly modified from the orginal num.sv() in the SVA package on Bioconductor. This function has the tolerance level in the fast.svd() function set back to its orginal default instead of 0.
 }
 \usage{
 num.sv2(dat, mod, method = c("be", "leek"), vfilter = NULL, 

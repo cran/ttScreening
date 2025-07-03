@@ -11,8 +11,8 @@ Genome-Wide DNA Methylation Sites Screening by Use of Training and Testing Sampl
 \tabular{ll}{
 Package: \tab ttScreening\cr
 Type: \tab Package\cr
-Version: \tab 1.6\cr
-Date: \tab 2018-09-18\cr
+Version: \tab 1.7\cr
+Date: \tab 2025-07-03\cr
 License: \tab Artistic-2.0\cr
 }
 This package utilizes training and testing samples to filter out uninformative DNA methylation
@@ -32,6 +32,4 @@ Leek JT and Storey JD. (2007) ``Capturing heterogeneity in gene expression studi
 
 
 \keyword{ ttScreening }
-\seealso{
-\code{\link{sva}}
-}
+

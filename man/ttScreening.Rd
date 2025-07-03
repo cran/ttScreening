@@ -19,7 +19,7 @@ percent = (2/3),linear = c("robust", "ls"), vfilter = NULL, B = 5,
     Data matrix of DNA methylation measures (m by n, m CpG sites and n subjects). Each column represents DNA methylation measures of all CpG sites for one subject.
 }
   \item{formula}{
-     An object of class \code{\link{formula}} (or one that can be coerced to that class): a symbolic description of the model to be fitted. The details of model specification are given under "Details".
+     An object of class \code{\link[stats]{formula}} (or one that can be coerced to that class): a symbolic description of the model to be fitted. The details of model specification are given under "Details".
 }
   \item{imp.var}{
     A vector indicating the location of the term(s) in the formula option on which the selection of CpG sites are made. Interactions are considered a single term. For example, suppose the right-hand side of the equation is: x + z + x:z. If the decision of selecting a CpG site is based on one single term, e.g., the significance of interaction effect, then imp.var is set as the location of that term, e.g., imp.var=3 (the third term). If the decision is desired to base on all the three terms, then imp.var=c(1,2,3).
@@ -79,7 +79,7 @@ percent = (2/3),linear = c("robust", "ls"), vfilter = NULL, B = 5,
 
 }
 \details{
-See \cite{\link{lm}} or \cite{\link{glm}} for details.
+See \cite{\link[stats]{lm}} or \cite{\link[stats]{glm}} for details.
 }
 \value{
  \item{sub.remove}{
